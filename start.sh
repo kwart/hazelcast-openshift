@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 PRG="$0"
 PRGDIR=`dirname "$PRG"`
@@ -24,6 +24,10 @@ fi
 echo "Kubernetes Service DNS: $HAZELCAST_KUBERNETES_SERVICE_DNS"
 
 export CLASSPATH=$HZ_DATA/*:$HAZELCAST_HOME/*:$HAZELCAST_CP_MOUNT/*:$CLASSPATH
+export HAZELCAST_HOME
+
+"$PRGDIR/ks-update.sh"
+"$PRGDIR/ks-update-loop.sh" >/dev/null 2>&1 &
 
 echo "########################################"
 echo "# RUN_JAVA=$RUN_JAVA"

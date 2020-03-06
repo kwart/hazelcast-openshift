@@ -4,6 +4,7 @@ MAINTAINER Hazelcast, Inc. Integration Team <info@hazelcast.com>
 ENV HZ_HOME /opt/hazelcast/
 ENV HZ_CP_MOUNT ${HZ_HOME}/external
 ENV LANG en_US.utf8
+ENV CERT_MANAGER_DIRECTORY=/tls
 
 ENV USER_NAME=hazelcast
 ENV USER_UID=10001
@@ -32,9 +33,7 @@ RUN mkdir -p $HZ_HOME
 RUN mkdir -p $HZ_CP_MOUNT
 WORKDIR $HZ_HOME
 
-ADD hazelcast.xml $HZ_HOME/hazelcast.xml
-ADD start.sh $HZ_HOME/start.sh
-ADD stop.sh $HZ_HOME/stop.sh
+ADD *.sh *.xml $HZ_HOME/
 
 # Add licenses
 ADD licenses /licenses
