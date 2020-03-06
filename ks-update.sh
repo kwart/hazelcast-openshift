@@ -8,7 +8,8 @@ if [ -d "$CERT_MANAGER_DIRECTORY" -a -d "$HAZELCAST_HOME" ]; then
     -in "$CERT_MANAGER_DIRECTORY/tls.crt" \
     -certfile "$CERT_MANAGER_DIRECTORY/ca.crt" \
     -passout pass:123456
-  keytool -importcert -trustcacerts -alias ca \
+  keytool -importcert -trustcacerts -noprompt \
+    -alias ca \
     -file "$CERT_MANAGER_DIRECTORY/ca.crt" \
     -keystore "$HAZELCAST_HOME/tls.p12.new" \
     -storepass 123456 \
