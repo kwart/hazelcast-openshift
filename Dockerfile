@@ -33,10 +33,10 @@ RUN mkdir -p $HZ_HOME
 RUN mkdir -p $HZ_CP_MOUNT
 WORKDIR $HZ_HOME
 
-ADD *.sh *.xml $HZ_HOME/
+COPY *.sh *.xml $HZ_HOME/
 
 # Add licenses
-ADD licenses /licenses
+COPY licenses /licenses
 
 ### Atomic Help File
 COPY description.md /tmp/
@@ -48,7 +48,7 @@ RUN dnf config-manager --disable && \
     dnf update -y  && rm -rf /var/cache/dnf && \
     dnf -y update-minimal --security --sec-severity=Important --sec-severity=Critical --setopt=tsflags=nodocs && \
 ### Add your package needs to this installation line
-    dnf -y --setopt=tsflags=nodocs install java-1.8.0-openjdk-devel apr openssl &> /dev/null && \
+    dnf -y --setopt=tsflags=nodocs install java-1.8.0-openjdk-devel apr openssl wget &> /dev/null && \
 ### Install go-md2man to help markdown to man conversion
     dnf -y --setopt=tsflags=nodocs install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm &> /dev/null && \
     dnf -y --setopt=tsflags=nodocs install golang-github-cpuguy83-go-md2man &> /dev/null && \
@@ -57,13 +57,10 @@ RUN dnf config-manager --disable && \
     dnf -y clean all
 
 ### add hazelcast enterprise
-ADD ${REPOSITORY_URL}/release/com/hazelcast/hazelcast-enterprise-all/${HZ_VERSION}/hazelcast-enterprise-all-${HZ_VERSION}.jar $HZ_HOME
-
-### Adding Logging redirector
-ADD https://repo1.maven.org/maven2/org/slf4j/jul-to-slf4j/1.7.12/jul-to-slf4j-1.7.12.jar $HZ_HOME
-
-### Adding JCache
-ADD https://repo1.maven.org/maven2/javax/cache/cache-api/1.0.0/cache-api-1.0.0.jar $HZ_HOME
+RUN cd $HZ_HOME \
+    && wget -nv ${REPOSITORY_URL}/release/com/hazelcast/hazelcast-enterprise-all/${HZ_VERSION}/hazelcast-enterprise-all-${HZ_VERSION}.jar \
+    && wget -nv https://repo1.maven.org/maven2/javax/cache/cache-api/1.0.0/cache-api-1.0.0.jar \
+    && wget -nv https://repo1.maven.org/maven2/org/slf4j/jul-to-slf4j/1.7.12/jul-to-slf4j-1.7.12.jar
 
 ### Adding maven wrapper, downloading Hazelcast Kubernetes discovery plugin and dependencies and cleaning up
 COPY mvnw $HZ_HOME/mvnw
