@@ -58,7 +58,7 @@ RUN echo "Updating Alpine system" \
     && curl -sf -o "${HZ_HOME}/lib/jmx_prometheus_javaagent.jar" \
          -L "https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_AGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_AGENT_VERSION}.jar" \
     && echo "Granting read permission to ${HZ_HOME}" \
-    && chmod -R +r $HZ_HOME \
+    && chmod -R g=u $HZ_HOME \
     && echo "Setting Pardot ID to 'docker'" \
     && echo 'hazelcastDownloadId=docker' > hazelcast-download.properties \
     && echo "Cleaning APK packages" \
