@@ -66,9 +66,10 @@ RUN cd $HZ_HOME \
 COPY mvnw $HZ_HOME/mvnw
 
 ### Configure Hazelcast
-RUN useradd -l -u $USER_UID -r -g 0 -d $HZ_HOME -s /sbin/nologin -c "${USER_UID} application user" $USER_NAME
-RUN chown -R $USER_UID:0 $HZ_HOME $HZ_CP_MOUNT
-RUN chmod +x $HZ_HOME/*.sh
+RUN useradd -l -u $USER_UID -r -g 0 -d $HZ_HOME -s /sbin/nologin -c "${USER_UID} application user" $USER_NAME \
+    && chown -R $USER_UID:0 $HZ_HOME $HZ_CP_MOUNT \
+    && chmod -R g=u $HZ_HOME $HZ_CP_MOUNT \
+    && chmod +x $HZ_HOME/*.sh
 
 ### Switch to hazelcast user
 USER $USER_UID
