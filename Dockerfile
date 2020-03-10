@@ -27,7 +27,7 @@ ENV HZ_HOME="${HZ_HOME}" \
 # Expose port
 EXPOSE 5701
 
-COPY *.xml *.sh ${HZ_HOME}/
+COPY *.xml *.sh *.properties ${HZ_HOME}/
 
 # Install
 RUN echo "Updating Alpine system" \
@@ -67,4 +67,4 @@ RUN echo "Updating Alpine system" \
 WORKDIR ${HZ_HOME}
 
 # Start Hazelcast server
-CMD ["/opt/hazelcast/start.sh"]
+CMD ["/opt/hazelcast/start-hazelcast.sh"]

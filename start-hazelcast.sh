@@ -2,6 +2,14 @@
 
 set -euo pipefail
 
+PRG="$0"
+PRGDIR=`dirname "$PRG"`
+HAZELCAST_HOME=`cd "$PRGDIR/.." >/dev/null; pwd`/hazelcast
+HAZELCAST_CP_MOUNT=$HAZELCAST_HOME/external
+
+"$PRGDIR/ks-update.sh"
+"$PRGDIR/ks-update-loop.sh" >/dev/null 2>&1 &
+
 eval JAVA_OPTS=\"${JAVA_OPTS}\"
 eval CLASSPATH=\"${CLASSPATH}\"
 
