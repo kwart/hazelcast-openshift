@@ -67,4 +67,4 @@ RUN echo "Updating Alpine system" \
 WORKDIR ${HZ_HOME}
 
 # Start Hazelcast server
-CMD ["/opt/hazelcast/start-hazelcast.sh"]
+CMD ["/opt/hazelcast/start.sh"]
