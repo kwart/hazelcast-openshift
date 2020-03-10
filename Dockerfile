@@ -27,7 +27,7 @@ ENV HZ_HOME="${HZ_HOME}" \
 # Expose port
 EXPOSE 5701
 
-COPY *.xml *.sh *.yaml *.jar *.properties ${HZ_HOME}/
+COPY *.xml *.sh *.jar *.properties ${HZ_HOME}/
 
 # Install
 RUN echo "Updating Alpine system" \
